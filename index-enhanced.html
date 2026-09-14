@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">King Smoke Shop and Vapors - Premium Smoking & Vaping Products</title>
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><i class="fas fa-crown"></i> <span id="navBrand">King Smoke Shop</span></div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="admin.html" class="admin-link"><i class="fas fa-cog"></i> Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Animation -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="smoke-animation"></div>
+            <div class="smoke-animation" style="animation-delay: 2s;"></div>
+            <div class="smoke-animation" style="animation-delay: 4s;"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text-animation">
+                <h1 id="heroTitle">Welcome to King Smoke Shop & Vapors</h1>
+                <p id="heroSubtitle">Your Premier Destination for Premium Smoking & Vaping Products</p>
+                <button class="cta-button" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">🛍️ Shop Now</button>
+            </div>
+            <div class="hero-graphics">
+                <div class="floating-icon" style="animation-delay: 0s;">🚬</div>
+                <div class="floating-icon" style="animation-delay: 1s;">💨</div>
+                <div class="floating-icon" style="animation-delay: 2s;">🧪</div>
+                <div class="floating-icon" style="animation-delay: 3s;">🔥</div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Premium Products</h2>
+                <p>Explore our extensive collection of quality items</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded from config -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Graphics -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="about-graphics">
+                    <div class="graphic-card quality">
+                        <i class="fas fa-star"></i>
+                        <span>Premium Quality</span>
+                    </div>
+                    <div class="graphic-card experience">
+                        <i class="fas fa-history"></i>
+                        <span>20+ Years</span>
+                    </div>
+                    <div class="graphic-card trusted">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Trusted Brand</span>
+                    </div>
+                </div>
+                <div class="about-content">
+                    <h2>About <span id="aboutBusinessName">King Smoke Shop</span></h2>
+                    <p id="aboutDescription"></p>
+                    <ul class="about-list" id="aboutList">
+                        <!-- Highlights will be loaded from config -->
+                    </ul>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h3>1000+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50+</h3>
+                            <p>Product Categories</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Satisfaction Guarantee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Us</h2>
+                <p>Exceptional service and premium quality guaranteed</p>
+            </div>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be loaded from config -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section with Carousel -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Customer Reviews</h2>
+                <p>Hear from our satisfied customers</p>
+            </div>
+            <div class="testimonials-carousel">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <!-- Testimonials will be loaded from config -->
+                </div>
+                <button class="carousel-btn prev" onclick="scrollTestimonials('left')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" onclick="scrollTestimonials('right')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>We'd love to hear from you. Contact us today!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info" id="contactInfo">
+                    <!-- Contact info will be loaded from config -->
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">📧 Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-crown"></i> King Smoke Shop</h3>
+                    <p id="footerDescription"></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links" id="socialLinks">
+                        <!-- Social links will be loaded from config -->
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="yearSpan"></span> King Smoke Shop and Vapors. All rights reserved. | <a href="admin.html">Admin Panel</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app-enhanced.js"></script>
+</body>
+</html>
