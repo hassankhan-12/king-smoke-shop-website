@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - King Smoke Shop and Vapors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d4af37;
+            --secondary: #1a1a1a;
+            --accent: #ff6b35;
+            --light: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: #333;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2a2a2a 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2a2a2a 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .filters {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid var(--light);
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .products-section {
+            padding: 2rem 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .add-to-cart {
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #e0c158;
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">👑 King Smoke Shop</div>
+            <ul class="nav-links">
+                <li><a href="index-enhanced.html">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="index-enhanced.html#about">About</a></li>
+                <li><a href="index-enhanced.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="cart-count">
+        🛒 Cart: <span id="cartCount">0</span>
+    </div>
+
+    <div class="page-header">
+        <h1>🛍️ Product Catalog</h1>
+        <p>Browse our premium selection</p>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="categoryFilter">Category:</label>
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="priceFilter">Price Range:</label>
+                <input type="range" id="priceFilter" min="0" max="500" value="500">
+            </div>
+            <div class="filter-group">
+                <label for="searchFilter">Search:</label>
+                <input type="text" id="searchFilter" placeholder="Search products...">
+            </div>
+        </div>
+
+        <div class="products-section">
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will load here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            { id: 1, name: "Premium Cigar Bundle", category: "Cigars", price: 45.99, icon: "🚬", description: "Pack of 5 hand-rolled cigars" },
+            { id: 2, name: "Vape Mod Pro", category: "Vaping", price: 89.99, icon: "💨", description: "Advanced vaping device" },
+            { id: 3, name: "E-Liquid Flavor Pack", category: "E-Liquids", price: 29.99, icon: "🧪", description: "6 different flavors" },
+            { id: 4, name: "Lighter Set", category: "Accessories", price: 15.99, icon: "🔥", description: "Premium lighter collection" },
+            { id: 5, name: "Rolling Papers", category: "Tobacco", price: 8.99, icon: "📄", description: "Organic rolling papers" },
+            { id: 6, name: "Starter Kit Complete", category: "Kits", price: 129.99, icon: "📦", description: "Everything you need" },
+            { id: 7, name: "Pipe Collection", category: "Accessories", price: 35.99, icon: "🚬", description: "Decorative pipe set" },
+            { id: 8, name: "Premium Tobacco Blend", category: "Tobacco", price: 24.99, icon: "💨", description: "Exclusive blend" },
+            { id: 9, name: "Vape Cartridge Pack", category: "E-Liquids", price: 42.99, icon: "🧪", description: "10 cartridge pack" },
+            { id: 10, name: "Glass Bong", category: "Accessories", price: 65.99, icon: "🔥", description: "Premium glass piece" },
+            { id: 11, name: "Cigar Humidor", category: "Cigars", price: 79.99, icon: "🚬", description: "Wooden cigar storage" },
+            { id: 12, name: "Vape Juice Bundle", category: "E-Liquids", price: 54.99, icon: "🧪", description: "Variety pack" }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let filteredProducts = [...products];
+
+        // Initialize
+        function init() {
+            populateCategories();
+            displayProducts(products);
+            updateCartCount();
+            setupEventListeners();
+        }
+
+        function populateCategories() {
+            const categories = [...new Set(products.map(p => p.category))];
+            const select = document.getElementById('categoryFilter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function displayProducts(productsToShow) {
+            const grid = document.getElementById('productsGrid');
+            if (productsToShow.length === 0) {
+                grid.innerHTML = '<div class="no-products" style="grid-column: 1/-1;">No products found</div>';
+                return;
+            }
+            grid.innerHTML = productsToShow.map(product => `
+                <div class="product-item">
+                    <div class="product-image">${product.icon}</div>
+                    <div class="product-content">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">\$${product.price.toFixed(2)}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            const maxPrice = document.getElementById('priceFilter').value;
+            const search = document.getElementById('searchFilter').value.toLowerCase();
+
+            filteredProducts = products.filter(product => {
+                const matchCategory = !category || product.category === category;
+                const matchPrice = product.price <= maxPrice;
+                const matchSearch = !search || product.name.toLowerCase().includes(search) || product.description.toLowerCase().includes(search);
+                return matchCategory && matchPrice && matchSearch;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+            
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(`${product.name} added to cart!`);
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+            document.getElementById('priceFilter').addEventListener('input', filterProducts);
+            document.getElementById('searchFilter').addEventListener('input', filterProducts);
+        }
+
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Verification - King Smoke Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d4af37;
+            --secondary: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, #2a2a2a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .verification-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid var(--primary);
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .crown {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning {
+            background: rgba(255, 107, 53, 0.2);
+            border-left: 4px solid #ff6b35;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        input[type="date"],
+        input[type="checkbox"] {
+            padding: 10px;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #ddd;
+            font-weight: normal;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-enter {
+            background: linear-gradient(135deg, var(--primary) 0%, #e0c158 100%);
+            color: var(--secondary);
+        }
+
+        .btn-enter:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-enter:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-decline {
+            background: transparent;
+            color: #ddd;
+            border: 2px solid #ddd;
+        }
+
+        .btn-decline:hover {
+            background: rgba(100, 100, 100, 0.3);
+            border-color: #999;
+        }
+
+        .legal-text {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .legal-text a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .legal-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <div class="crown">👑</div>
+        <h1>Age Verification Required</h1>
+        <p>You must be 18+ to enter this site</p>
+
+        <div class="warning">
+            <i class="fas fa-exclamation-circle"></i>
+            <strong>Important:</strong> This site contains products restricted to adults only. By entering, you confirm that you are of legal age to purchase these products in your jurisdiction.
+        </div>
+
+        <form id="ageForm">
+            <div class="form-group">
+                <label for="birthDate">Date of Birth:</label>
+                <input type="date" id="birthDate" required>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <span>I confirm that I am 18 years or older</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="agreeTerms2" required>
+                    <span>I agree to the Terms of Service and Privacy Policy</span>
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-decline" onclick="declineAccess()">I'm Under 18</button>
+                <button type="submit" class="btn-enter" id="enterBtn" disabled>Enter Site</button>
+            </div>
+        </form>
+
+        <div class="legal-text">
+            <p>This is a restricted website for adult consumers only. We comply with all applicable laws and regulations. <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Check if user already verified
+        if (sessionStorage.getItem('ageVerified') === 'true') {
+            window.location.href = 'index-enhanced.html';
+        }
+
+        const form = document.getElementById('ageForm');
+        const birthDateInput = document.getElementById('birthDate');
+        const enterBtn = document.getElementById('enterBtn');
+        const agreeCheckbox = document.getElementById('agreeTerms');
+        const agreeCheckbox2 = document.getElementById('agreeTerms2');
+
+        // Enable/disable button based on validation
+        function validateForm() {
+            const birthDate = birthDateInput.value;
+            const isAgreed = agreeCheckbox.checked && agreeCheckbox2.checked;
+            let isOldEnough = false;
+
+            if (birthDate) {
+                const birth = new Date(birthDate);
+                const today = new Date();
+                const age = today.getFullYear() - birth.getFullYear();
+                const monthDiff = today.getMonth() - birth.getMonth();
+                const dayDiff = today.getDate() - birth.getDate();
+
+                if (monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0)) {
+                    isOldEnough = age >= 18;
+                } else {
+                    isOldEnough = (age - 1) >= 18;
+                }
+            }
+
+            enterBtn.disabled = !isOldEnough || !isAgreed;
+        }
+
+        birthDateInput.addEventListener('change', validateForm);
+        agreeCheckbox.addEventListener('change', validateForm);
+        agreeCheckbox2.addEventListener('change', validateForm);
+
+        // Handle form submission
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const birthDate = new Date(birthDateInput.value);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            const dayDiff = today.getDate() - birthDate.getDate();
+
+            let finalAge = age;
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                finalAge = age - 1;
+            }
+
+            if (finalAge >= 18 && agreeCheckbox.checked && agreeCheckbox2.checked) {
+                sessionStorage.setItem('ageVerified', 'true');
+                window.location.href = 'index-enhanced.html';
+            } else {
+                alert('You must be 18 years or older to access this site.');
+            }
+        });
+
+        function declineAccess() {
+            window.location.href = 'https://www.google.com';
+        }
+
+        // Set max date to 18 years ago
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        birthDateInput.max = maxDate.toISOString().split('T')[0];
+    </script>
+</body>
+</html>
