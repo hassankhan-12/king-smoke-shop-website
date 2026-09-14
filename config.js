@@ -177,8 +177,3 @@ const CONFIG = {
         keywords: "smoke shop, vaping, cigars, e-liquids, vape devices, smoking accessories"
     }
 };
-
-// Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CONFIG;
-}

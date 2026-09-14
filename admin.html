@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - King Smoke Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+        }
+
+        .admin-header .btn-back {
+            background: #1a1a1a;
+            color: #d4af37;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .admin-header .btn-back:hover {
+            background: #333;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 0;
+            background: #f5f5f5;
+            border-bottom: 2px solid #d4af37;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 15px 20px;
+            background: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: #d0d0d0;
+        }
+
+        .tab-button.active {
+            background: #d4af37;
+            color: #1a1a1a;
+            border-bottom: 3px solid #1a1a1a;
+        }
+
+        .admin-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-save {
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-save:hover {
+            background: #e0c158;
+            transform: scale(1.05);
+        }
+
+        .success-message {
+            background: #d4f1d4;
+            color: #27ae60;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #d4af37;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .info-box i {
+            color: #d4af37;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>👑 Admin Panel</h1>
+            <button class="btn-back" onclick="window.location.href='index.html'">← Back to Website</button>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-button active" onclick="switchTab('business')">Business Info</button>
+            <button class="tab-button" onclick="switchTab('contact')">Contact</button>
+            <button class="tab-button" onclick="switchTab('hours')">Hours</button>
+            <button class="tab-button" onclick="switchTab('products')">Products</button>
+            <button class="tab-button" onclick="switchTab('services')">Services</button>
+            <button class="tab-button" onclick="switchTab('testimonials')">Testimonials</button>
+            <button class="tab-button" onclick="switchTab('colors')">Colors & Design</button>
+        </div>
+
+        <div class="admin-content">
+            <div id="success" class="success-message">
+                <i class="fas fa-check-circle"></i> Changes saved successfully!
+            </div>
+
+            <!-- Business Info Tab -->
+            <div id="business" class="tab-content active">
+                <h2 class="section-title">Business Information</h2>
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    Edit your business name, tagline, and description here.
+                </div>
+                <form onsubmit="saveConfig(event, 'business')">
+                    <div class="form-group">
+                        <label for="businessName">Business Name:</label>
+                        <input type="text" id="businessName" placeholder="Enter business name">
+                    </div>
+                    <div class="form-group">
+                        <label for="tagline">Tagline:</label>
+                        <input type="text" id="tagline" placeholder="Enter business tagline">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" placeholder="Enter business description"></textarea>
+                    </div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Contact Tab -->
+            <div id="contact" class="tab-content">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="info-box">
+                    <i class="fas fa-phone"></i>
+                    Update your phone, email, and address information.
+                </div>
+                <form onsubmit="saveConfig(event, 'contact')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" id="phone" placeholder="Enter phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" placeholder="Enter email address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Street Address:</label>
+                        <input type="text" id="address" placeholder="Enter street address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" id="city" placeholder="Enter city">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <input type="text" id="state" placeholder="Enter state">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">ZIP Code:</label>
+                        <input type="text" id="zip" placeholder="Enter ZIP code">
+                    </div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Hours Tab -->
+            <div id="hours" class="tab-content">
+                <h2 class="section-title">Business Hours</h2>
+                <div class="info-box">
+                    <i class="fas fa-clock"></i>
+                    Set your business hours for each day of the week.
+                </div>
+                <form onsubmit="saveConfig(event, 'hours')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="monday">Monday:</label>
+                            <input type="text" id="monday" placeholder="e.g., 10:00 AM - 9:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label for="tuesday">Tuesday:</label>
+                            <input type="text" id="tuesday" placeholder="e.g., 10:00 AM - 9:00 PM">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="wednesday">Wednesday:</label>
+                            <input type="text" id="wednesday" placeholder="e.g., 10:00 AM - 9:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label for="thursday">Thursday:</label>
+                            <input type="text" id="thursday" placeholder="e.g., 10:00 AM - 9:00 PM">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="friday">Friday:</label>
+                            <input type="text" id="friday" placeholder="e.g., 10:00 AM - 10:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label for="saturday">Saturday:</label>
+                            <input type="text" id="saturday" placeholder="e.g., 10:00 AM - 10:00 PM">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sunday">Sunday:</label>
+                        <input type="text" id="sunday" placeholder="e.g., 12:00 PM - 8:00 PM">
+                    </div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products" class="tab-content">
+                <h2 class="section-title">Products</h2>
+                <div class="info-box">
+                    <i class="fas fa-box"></i>
+                    Edit your product categories and descriptions.
+                </div>
+                <form onsubmit="saveConfig(event, 'products')">
+                    <div id="productsContainer"></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Services Tab -->
+            <div id="services" class="tab-content">
+                <h2 class="section-title">Services</h2>
+                <div class="info-box">
+                    <i class="fas fa-concierge-bell"></i>
+                    Update your service offerings and descriptions.
+                </div>
+                <form onsubmit="saveConfig(event, 'services')">
+                    <div id="servicesContainer"></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Testimonials Tab -->
+            <div id="testimonials" class="tab-content">
+                <h2 class="section-title">Customer Testimonials</h2>
+                <div class="info-box">
+                    <i class="fas fa-star"></i>
+                    Add and edit customer reviews.
+                </div>
+                <form onsubmit="saveConfig(event, 'testimonials')">
+                    <div id="testimonialsContainer"></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+
+            <!-- Colors Tab -->
+            <div id="colors" class="tab-content">
+                <h2 class="section-title">Colors & Design</h2>
+                <div class="info-box">
+                    <i class="fas fa-palette"></i>
+                    Customize the color scheme of your website.
+                </div>
+                <form onsubmit="saveConfig(event, 'colors')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="colorPrimary">Primary Color (Gold):</label>
+                            <input type="color" id="colorPrimary">
+                        </div>
+                        <div class="form-group">
+                            <label for="colorSecondary">Secondary Color (Dark):</label>
+                            <input type="color" id="colorSecondary">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="colorAccent">Accent Color:</label>
+                            <input type="color" id="colorAccent">
+                        </div>
+                        <div class="form-group">
+                            <label for="colorText">Text Color:</label>
+                            <input type="color" id="colorText">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load config from localStorage
+        function loadConfig() {
+            const saved = localStorage.getItem('kingsmokeConfig');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return CONFIG;
+        }
+
+        // Save config to localStorage
+        function saveConfigToStorage(config) {
+            localStorage.setItem('kingsmokeConfig', JSON.stringify(config));
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            loadFormFields();
+        }
+
+        // Load form fields with current values
+        function loadFormFields() {
+            const config = loadConfig();
+
+            // Business
+            document.getElementById('businessName').value = config.business.name;
+            document.getElementById('tagline').value = config.business.tagline;
+            document.getElementById('description').value = config.business.description;
+
+            // Contact
+            document.getElementById('phone').value = config.contact.phone;
+            document.getElementById('email').value = config.contact.email;
+            document.getElementById('address').value = config.contact.address;
+            document.getElementById('city').value = config.contact.city;
+            document.getElementById('state').value = config.contact.state;
+            document.getElementById('zip').value = config.contact.zip;
+
+            // Hours
+            document.getElementById('monday').value = config.hours.monday;
+            document.getElementById('tuesday').value = config.hours.tuesday;
+            document.getElementById('wednesday').value = config.hours.wednesday;
+            document.getElementById('thursday').value = config.hours.thursday;
+            document.getElementById('friday').value = config.hours.friday;
+            document.getElementById('saturday').value = config.hours.saturday;
+            document.getElementById('sunday').value = config.hours.sunday;
+
+            // Colors
+            document.getElementById('colorPrimary').value = config.colors.primary;
+            document.getElementById('colorSecondary').value = config.colors.secondary;
+            document.getElementById('colorAccent').value = config.colors.accent;
+            document.getElementById('colorText').value = config.colors.text;
+
+            // Products
+            loadProductsForm(config);
+            loadServicesForm(config);
+            loadTestimonialsForm(config);
+        }
+
+        // Load products form
+        function loadProductsForm(config) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            config.products.forEach((product, index) => {
+                container.innerHTML += `
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="color: #d4af37; margin-bottom: 10px;">Product ${index + 1}</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" class="product-name" value="${product.name}">
+                            </div>
+                            <div class="form-group">
+                                <label>Icon:</label>
+                                <input type="text" class="product-icon" value="${product.icon}" maxlength="2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <input type="text" class="product-description" value="${product.description}">
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Load services form
+        function loadServicesForm(config) {
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = '';
+            config.services.forEach((service, index) => {
+                container.innerHTML += `
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="color: #d4af37; margin-bottom: 10px;">Service ${index + 1}</h3>
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input type="text" class="service-title" value="${service.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <input type="text" class="service-description" value="${service.description}">
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Load testimonials form
+        function loadTestimonialsForm(config) {
+            const container = document.getElementById('testimonialsContainer');
+            container.innerHTML = '';
+            config.testimonials.forEach((testimonial, index) => {
+                container.innerHTML += `
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                        <h3 style="color: #d4af37; margin-bottom: 10px;">Review ${index + 1}</h3>
+                        <div class="form-group">
+                            <label>Customer Name:</label>
+                            <input type="text" class="testimonial-name" value="${testimonial.name}">
+                        </div>
+                        <div class="form-group">
+                            <label>Review Text:</label>
+                            <textarea class="testimonial-text" rows="3">${testimonial.text}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Rating (1-5):</label>
+                            <input type="number" class="testimonial-rating" min="1" max="5" value="${testimonial.rating}">
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Save config
+        function saveConfig(event, section) {
+            event.preventDefault();
+            const config = loadConfig();
+
+            if (section === 'business') {
+                config.business.name = document.getElementById('businessName').value;
+                config.business.tagline = document.getElementById('tagline').value;
+                config.business.description = document.getElementById('description').value;
+            }
+
+            if (section === 'contact') {
+                config.contact.phone = document.getElementById('phone').value;
+                config.contact.email = document.getElementById('email').value;
+                config.contact.address = document.getElementById('address').value;
+                config.contact.city = document.getElementById('city').value;
+                config.contact.state = document.getElementById('state').value;
+                config.contact.zip = document.getElementById('zip').value;
+                config.contact.fullAddress = `${config.contact.address}, ${config.contact.city}, ${config.contact.state} ${config.contact.zip}`;
+            }
+
+            if (section === 'hours') {
+                config.hours.monday = document.getElementById('monday').value;
+                config.hours.tuesday = document.getElementById('tuesday').value;
+                config.hours.wednesday = document.getElementById('wednesday').value;
+                config.hours.thursday = document.getElementById('thursday').value;
+                config.hours.friday = document.getElementById('friday').value;
+                config.hours.saturday = document.getElementById('saturday').value;
+                config.hours.sunday = document.getElementById('sunday').value;
+            }
+
+            if (section === 'products') {
+                document.querySelectorAll('.product-name').forEach((el, index) => {
+                    config.products[index].name = el.value;
+                    config.products[index].icon = document.querySelectorAll('.product-icon')[index].value;
+                    config.products[index].description = document.querySelectorAll('.product-description')[index].value;
+                });
+            }
+
+            if (section === 'services') {
+                document.querySelectorAll('.service-title').forEach((el, index) => {
+                    config.services[index].title = el.value;
+                    config.services[index].description = document.querySelectorAll('.service-description')[index].value;
+                });
+            }
+
+            if (section === 'testimonials') {
+                document.querySelectorAll('.testimonial-name').forEach((el, index) => {
+                    config.testimonials[index].name = el.value;
+                    config.testimonials[index].text = document.querySelectorAll('.testimonial-text')[index].value;
+                    config.testimonials[index].rating = parseInt(document.querySelectorAll('.testimonial-rating')[index].value);
+                });
+            }
+
+            if (section === 'colors') {
+                config.colors.primary = document.getElementById('colorPrimary').value;
+                config.colors.secondary = document.getElementById('colorSecondary').value;
+                config.colors.accent = document.getElementById('colorAccent').value;
+                config.colors.text = document.getElementById('colorText').value;
+            }
+
+            saveConfigToStorage(config);
+            showSuccessMessage();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            const message = document.getElementById('success');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+
+        // Load form fields on page load
+        window.addEventListener('DOMContentLoaded', loadFormFields);
+    </script>
+</body>
+</html>
